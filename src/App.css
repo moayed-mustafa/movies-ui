@@ -6,6 +6,25 @@
   height: 40vmin;
   pointer-events: none;
 }
+.form{
+  display: flex;
+  align-items: center;
+  justify-content:center;
+  margin:1rem;
+  padding: 1rem;
+}
+.form-group{
+  flex-grow: 2;
+  width:90%;
+  padding:10px;
+}
+.form-group> .search{
+  width:100%;
+}
+.cards{
+  display: flex;
+}
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -34,5 +53,103 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* .container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+.movies-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.card-wrapper{
+  /* height:50%; */
+  width:45%;
+  margin: 50px auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  border-radius: 15px;
+  background-color: #000000;
+  margin: 1rem;
+
+}
+
+.movie-img-wrapper{
+  width:50%;
+  height:100%;
+}
+.movie-img{
+  width:20em;
+  height:100%;
+  border-radius: 7px ;
+}
+.movie-title{
+  color:#FFFFFF;
+  background-color:#000000;
+  padding:0.5rem;
+  font-weight:bold;
+  border-radius:7px;
+  border-bottom:2px solid #FFFFFF;
+
+}
+.movie-descripition{
+
+  /* #283350; */
+  color:#FFFFFF;
+  background-color:#000000;
+  padding:0.5rem;
+  border-bottom:3px solid #FFFFFF;
+  font-display: block;
+  border-radius:7px;
+  text-align: right;
+
+}
+.details-button{
+  margin-top: 0.5rem;
+}
+
+@media only screen and (max-width: 768px){
+  .card-wrapper{
+    height:25%;
+    width:100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    border-radius: 15px;
+    background-color: #000000;
+
+  }
+  .movie-img-wrapper{
+    width:50%;
+    height:50%;
+  }
+  .movie-img{
+    width:12em;
+    border-radius: 7px ;
+  }
+  .movie-title{
+    color:#FFFFFF;
+  background-color:#000000;
+    padding:0.5rem;
+    font-weight:bold;
+    border-radius:7px;
+    width: 100%;
+
+  }
+  .movie-descripition{
+    color:#FFFFFF;
+    background-color:#000000;
+    padding:0.5rem;
+    border: solid 1px white;
+    font-display: block;
+    border-radius:7px;
+    width:100%;
+
   }
 }
