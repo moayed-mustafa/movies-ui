@@ -2,6 +2,7 @@
 import React,{useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom'
 import { Badge, Button } from 'reactstrap';
+import { v4 as uuid } from 'uuid';
 
 import Api from './Api'
 
@@ -29,17 +30,32 @@ export default
         return () => {}
     }, [movieId])
 
+    //  Vote
+    async function vote(e) {
+
+        try {
+            const { name } = e.target
+            const userVote = name === "up"? 1: -1
+            await Api.vote(movie.title, userVote, name)
+
+        } catch (e) {
+            console.log(e)
+        }
+
+    }
+
     //  flip movie card poster
     function flipImage() {
-        setIsFlipped(! isFlipped)
+        setIsFlipped(!isFlipped)
     }
+    console.log(movie)
     return (
 
 
         <div className='movies-container' >
 
 
-            {movie && <div className="card-wrapper" >
+            {movie && <div className="card-wrapper" key={uuid()} >
                 <div className="movie-img-wrapper" onClick={flipImage}>
                     {
                     isFlipped?
@@ -55,22 +71,48 @@ export default
                         {movie.productoin_companies && movie.productoin_companies.map(company => (
                             <Badge color="warning">{company.name}</Badge>
                         ))}
-                        {movie.genres && movie.genres.map(genre => (
+                        Genres:{movie.genres && movie.genres.map(genre => (
                             <Badge className="m-1" color="warning">{genre.name}</Badge>
                         ))}
-                        <p>Runtime: {movie.runtime} mins</p>
+                        <hr></hr>
+                        Production:{movie.production_companies && movie.production_companies.map(company => (
+                            <Badge className="m-1" color="danger">{company.name}</Badge>
+                        ))}
+                        <hr></hr>
+                        <p> <Badge color="success"> Runtime: {movie.runtime} mins</Badge></p>
                         {movie.status === "Released" ?
-                            <Badge color="success">Status: {movie.status} </Badge> :
-                            <Badge color="warning">Status: {movie.status} </Badge>}
+                            <span key={uuid()} >
+                            <Badge color="success" className="mr-1">Status: {movie.status}</Badge>
+                            <Badge color="danger" >Release data: {movie.release_date} </Badge>
+                            </span>
+                            :
+                            <span key={uuid()}>
+                                <Badge color="warning" className="mr-1">Status: {movie.status} </Badge>
+                                <Badge color="info" >Release data: {movie.release_date}</Badge>
+                            </span>
+                                }
+
                     </div>
+                    <div>
                     <Button color="success"
                         className="details-button m-2"
                         id={movie.id}
-                    >Upvote</Button>
+                        name="up"
+                        onClick={vote}
+                    ><i className="far fa-thumbs-up"></i></Button>
+                        <Badge color="success">upvotes: 456</Badge>
+                        </div>
+                    <div>
                     <Button color="danger"
                         className="details-button m-2"
                         id={movie.id}
-                    >Downvote</Button>
+                        name="down"
+                            onClick={vote}>
+                            <i className="far fa-thumbs-down"></i>
+                        </Button>
+                        <Badge color="danger">downvotes: 456</Badge>
+                        </div>
+
                 </div>
             </div>}
             </div>

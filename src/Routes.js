@@ -5,6 +5,7 @@ import SearchForm from './SearchForm'
 import MovieDetails from './MovieDetails'
 import MoviesList from './MoviesList'
 import NotFound from './NotFound'
+import HomePage from './HomePage'
 
 import { v4 as uuid } from 'uuid';
 
@@ -15,12 +16,15 @@ export default function Routes() {
     return(
     <Router>
             <SearchForm setter={setMoviesState}/>
-        <Switch>
+            <Switch>
+            <Route exact path="/">
+                    <HomePage/>
+            </Route>
             <Route exact path="/movies">
                     <MoviesList data={moviesState}/>
             </Route>
             <Route exact path="/movies/:id">
-                    <MovieDetails key={uuid()}/>
+                    <MovieDetails />
                 </Route>
             <Route >
                     <NotFound/>
