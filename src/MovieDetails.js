@@ -11,6 +11,7 @@ export default
         const { id } = useParams()
     const [movie, setMovie] = useState(null)
     const [movieId, setMovieId] = useState(id)
+    const [votes, setVotes] = useState({thumbs_up:0, thumbs_down: 0})
     const [isFlipped, setIsFlipped] = useState(true)
 
     // HTTP request
@@ -20,23 +21,41 @@ export default
             try {
                 const res = await Api.getMovie(movieId)
                 setMovie(data => data = res)
+                // get the vote from database
+                const votesRes = await Api.getVotes(res.title)
+                const { movieExist, votes } = votesRes
+                // console.log(movieExist, votes )
+                if (movieExist) {
+                    setVotes(votes)
+                }
+
+
+
+
             } catch (e) {
                 console.log(e)
             }
         }
 
         getMovieDetails()
+
         //  cleanup function
         return () => {}
-    }, [movieId])
+    }, [setMovie, movieId])
 
     //  Vote
     async function vote(e) {
 
         try {
-            const { name } = e.target
-            const userVote = name === "up"? 1: -1
-            await Api.vote(movie.title, userVote, name)
+            const { name, id } = e.target
+            const userVote = name || id === "up"? 1: -1
+            await Api.vote(movie.title, userVote, name || id)
+            // update votes:
+            const votesRes = await Api.getVotes(movie.title)
+            const { votes } = votesRes
+            setVotes(votes)
+            // disable button
+            e.target.parentElement.disabled = true;
 
         } catch (e) {
             console.log(e)
@@ -48,7 +67,6 @@ export default
     function flipImage() {
         setIsFlipped(!isFlipped)
     }
-    console.log(movie)
     return (
 
 
@@ -71,11 +89,11 @@ export default
                         {movie.productoin_companies && movie.productoin_companies.map(company => (
                             <Badge color="warning">{company.name}</Badge>
                         ))}
-                        Genres:{movie.genres && movie.genres.map(genre => (
+                        <Badge color="info"><b>Genres:</b></Badge>{movie.genres && movie.genres.map(genre => (
                             <Badge className="m-1" color="warning">{genre.name}</Badge>
                         ))}
                         <hr></hr>
-                        Production:{movie.production_companies && movie.production_companies.map(company => (
+                        <Badge color="info"><b>Production:</b></Badge>{movie.production_companies && movie.production_companies.map(company => (
                             <Badge className="m-1" color="danger">{company.name}</Badge>
                         ))}
                         <hr></hr>
@@ -99,8 +117,8 @@ export default
                         id={movie.id}
                         name="up"
                         onClick={vote}
-                    ><i className="far fa-thumbs-up"></i></Button>
-                        <Badge color="success">upvotes: 456</Badge>
+                    ><i className="far fa-thumbs-up" id="up"></i></Button>
+                        <Badge color="success">upvotes:{votes.thumbs_up} </Badge>
                         </div>
                     <div>
                     <Button color="danger"
@@ -108,9 +126,9 @@ export default
                         id={movie.id}
                         name="down"
                             onClick={vote}>
-                            <i className="far fa-thumbs-down"></i>
+                            <i  id="down"className="far fa-thumbs-down"></i>
                         </Button>
-                        <Badge color="danger">downvotes: 456</Badge>
+                        <Badge color="danger">downvotes:{votes.thumbs_down} </Badge>
                         </div>
 
                 </div>

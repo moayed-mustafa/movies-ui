@@ -25,7 +25,16 @@ export default class API{
     }
     static async vote(title, user_vote, direction) {
         try {
-          await axios.post(`${BASE_URL}/movie/${direction}`,{ title, user_vote, direction })
+          await axios.post(`${BASE_URL}/movie/vote`,{ title, user_vote, direction })
+
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    static async getVotes(title) {
+        try {
+            const res = await axios.get(`${BASE_URL}/movies/${title}`)
+            return res.data;
 
         } catch (e) {
             console.log(e)
