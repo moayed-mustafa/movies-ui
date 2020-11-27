@@ -15,7 +15,6 @@ export default
     const [isFlipped, setIsFlipped] = useState(true)
     const [upVoteDisabled, setUpVoteDisabled] = useState(false)
     const [downVoteDisabled, setDownVoteDisabled] = useState(false)
-    // const THUMB_DOWN = useRef(null)
 
     // HTTP request
     useEffect(() => {

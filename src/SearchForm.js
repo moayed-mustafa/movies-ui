@@ -23,10 +23,8 @@ export default
     async function handleSubmit (e) {
         e.preventDefault()
         const result = await Api.search(formData.search)
-        // console.log(result.data)
         setter(data => data = result)
         history.push('/movies')
-        // I think I need to use context to pass the data coming from the api call to my movies list component
         setFormData({ search: '' });
     }
 
@@ -34,7 +32,6 @@ export default
 
                 <Form inline onSubmit={handleSubmit} className="form">
                     <FormGroup className="mb-2 mr-sm-2 mb-sm-0 form-group">
-                        {/* <Label for="exampleEmail" className="mr-sm-2">Search</Label> */}
                     <Input type="text"
                         name="search"
                         className="search"
