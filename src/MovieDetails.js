@@ -13,6 +13,9 @@ export default
     const [movieId, setMovieId] = useState(id)
     const [votes, setVotes] = useState({thumbs_up:0, thumbs_down: 0})
     const [isFlipped, setIsFlipped] = useState(true)
+    const [upVoteDisabled, setUpVoteDisabled] = useState(false)
+    const [downVoteDisabled, setDownVoteDisabled] = useState(false)
+    // const THUMB_DOWN = useRef(null)
 
     // HTTP request
     useEffect(() => {
@@ -55,7 +58,13 @@ export default
             const { votes } = votesRes
             setVotes(votes)
             // disable button
-            e.target.parentElement.disabled = true;
+            if (name || id === "up") {
+                setUpVoteDisabled(true)
+                setDownVoteDisabled(false)
+            }
+            else {
+                setDownVoteDisabled(true)
+                setUpVoteDisabled(false)}
 
         } catch (e) {
             console.log(e)
@@ -116,16 +125,19 @@ export default
                         className="details-button m-2"
                         id={movie.id}
                         name="up"
+                         disabled={upVoteDisabled}
                         onClick={vote}
                     ><i className="far fa-thumbs-up" id="up"></i></Button>
                         <Badge color="success">upvotes:{votes.thumbs_up} </Badge>
-                        </div>
+                    </div>
+
                     <div>
                     <Button color="danger"
                         className="details-button m-2"
                         id={movie.id}
                         name="down"
-                            onClick={vote}>
+                         disabled={downVoteDisabled}
+                        onClick={vote}>
                             <i  id="down"className="far fa-thumbs-down"></i>
                         </Button>
                         <Badge color="danger">downvotes:{votes.thumbs_down} </Badge>

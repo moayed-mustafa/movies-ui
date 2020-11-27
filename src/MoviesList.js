@@ -14,9 +14,11 @@ export default
     return (
 
         <div className="movies-container">
-
             {data === null ? <Alert color="warning"><h1>No movies to display</h1></Alert>
-                : data.map(movie => (
+                :
+                data.length === 0 ? <Alert color="warning"><h1>Nothing was found</h1></Alert>:
+
+                    data.map(movie => (
                 <div className="card-wrapper"  key={uuid()}>
                     <div className="movie-img-wrapper" >
                         <img className="movie-img" src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} alt="movie-display"></img>
@@ -35,6 +37,7 @@ export default
                         >Details</Button>
                     </div>
                 </div>
+
 
             ))}
         </div>
