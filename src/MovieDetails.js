@@ -27,14 +27,9 @@ export default
                 // get the vote from database
                 const votesRes = await Api.getVotes(res.title)
                 const { movieExist, votes } = votesRes
-                // console.log(movieExist, votes )
                 if (movieExist) {
                     setVotes(votes)
                 }
-
-
-
-
             } catch (e) {
                 console.log(e)
             }
@@ -64,7 +59,8 @@ export default
             }
             else {
                 setDownVoteDisabled(true)
-                setUpVoteDisabled(false)}
+                setUpVoteDisabled(false)
+            }
 
         } catch (e) {
             console.log(e)
@@ -79,9 +75,7 @@ export default
     return (
 
 
-        <div className='movies-container' >
-
-
+        <div className='movies-container'  >
             {movie && <div className="card-wrapper" key={uuid()} >
                 <div className="movie-img-wrapper" onClick={flipImage}>
                     {
@@ -96,24 +90,24 @@ export default
                     <div className="movie-descripition" >
                         <p>{movie.overview ? movie.overview : " Alas, no descreption available"}</p>
                         {movie.productoin_companies && movie.productoin_companies.map(company => (
-                            <Badge color="warning">{company.name}</Badge>
+                            <Badge key={uuid()} color="warning">{company.name}</Badge>
                         ))}
                         <Badge color="info"><b>Genres:</b></Badge>{movie.genres && movie.genres.map(genre => (
-                            <Badge className="m-1" color="warning">{genre.name}</Badge>
+                            <Badge key={uuid()}className="m-1" color="warning">{genre.name}</Badge>
                         ))}
                         <hr></hr>
                         <Badge color="info"><b>Production:</b></Badge>{movie.production_companies && movie.production_companies.map(company => (
-                            <Badge className="m-1" color="danger">{company.name}</Badge>
+                            <Badge key={uuid()}className="m-1" color="danger">{company.name}</Badge>
                         ))}
                         <hr></hr>
                         <p> <Badge color="success"> Runtime: {movie.runtime} mins</Badge></p>
                         {movie.status === "Released" ?
-                            <span key={uuid()} >
+                            <span  >
                             <Badge color="success" className="mr-1">Status: {movie.status}</Badge>
                             <Badge color="danger" >Release data: {movie.release_date} </Badge>
                             </span>
                             :
-                            <span key={uuid()}>
+                            <span >
                                 <Badge color="warning" className="mr-1">Status: {movie.status} </Badge>
                                 <Badge color="info" >Release data: {movie.release_date}</Badge>
                             </span>

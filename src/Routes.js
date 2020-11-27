@@ -7,7 +7,6 @@ import MoviesList from './MoviesList'
 import NotFound from './NotFound'
 import HomePage from './HomePage'
 
-import { v4 as uuid } from 'uuid';
 
 
 export default function Routes() {
