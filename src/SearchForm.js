@@ -1,16 +1,15 @@
 
 import React, { useState } from 'react'
 import {useHistory} from 'react-router-dom'
-import { Button, Form,Label, FormGroup,Input } from 'reactstrap';
+import { Button, Form, FormGroup,Input } from 'reactstrap';
 import Api from './Api'
 export default
     function SearchForm({setter}) {
 
-      // set the state of the form
     const [formData, setFormData] = useState({ search: "" });
     const history = useHistory();
  
-    // monitor the change of the form data and change state
+    // control form
     function changeData(e){
         e.persist();
         const { value, name } = e.target;

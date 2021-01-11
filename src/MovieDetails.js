@@ -10,20 +10,18 @@ export default
     function MovieDetails() {
         const { id } = useParams()
     const [movie, setMovie] = useState(null)
-    const [movieId, setMovieId] = useState(id)
+    const [movieId] = useState(id)
     const [votes, setVotes] = useState({thumbs_up:0, thumbs_down: 0})
     const [isFlipped, setIsFlipped] = useState(true)
     const [upVoteDisabled, setUpVoteDisabled] = useState(false)
     const [downVoteDisabled, setDownVoteDisabled] = useState(false)
 
-    // HTTP request
     useEffect(() => {
 
         async function getMovieDetails() {
             try {
                 const res = await Api.getMovie(movieId)
                 setMovie(data => data = res)
-                // get the vote from database
                 const votesRes = await Api.getVotes(res.title)
                 const { movieExist, votes } = votesRes
                 if (movieExist) {
@@ -36,7 +34,6 @@ export default
 
         getMovieDetails()
 
-        //  cleanup function
         return () => {}
     }, [setMovie, movieId])
 
@@ -67,7 +64,6 @@ export default
 
     }
 
-    //  flip movie card poster
     function flipImage() {
         setIsFlipped(!isFlipped)
     }
